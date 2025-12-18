@@ -1,0 +1,24 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+  mail:
+    host: smtp.mailgun.org
+    username: bridgehouseexchange1!@sandbox41029d0bc4d642f48df8161e4b271dd7.mailgun.org
+
+jwt:
+  expiration-minutes: 15
+
+nginx:
+  require-proxy: true
+
+chirp10:
+  email:
+    url: "https://melatech.com"
+  rate-limit:
+    ip:
+      apply-limit: true
+  web-socket:
+    allowed-origins:
+      - "https://chirp.pl-coding.com"
