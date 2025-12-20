@@ -2,6 +2,7 @@ package com.melatech.chirp10.service
 
 import com.melatech.chirp10.api.dto.ChatMessageDto
 import com.melatech.chirp10.api.mappers.toChatMessageDto
+import com.melatech.chirp10.domain.event.ChatCreatedEvent
 import com.melatech.chirp10.domain.event.ChatParticipantJoinedEvent
 import com.melatech.chirp10.domain.event.ChatParticipantLeftEvent
 import com.melatech.chirp10.domain.exception.ChatNotFoundException
@@ -97,12 +98,19 @@ class ChatService(
         val creator = chatParticipantRepository.findByIdOrNull(creatorId)
             ?: throw ChatParticipantNotFoundException(creatorId)
 
-        return chatRepository.save(
+        return chatRepository.saveAndFlush(
             ChatEntity(
                 creator = creator,
                 participants = setOf(creator) + otherParticipants,
             )
-        ).toChat(lastMessage = null)
+        ).toChat(lastMessage = null).also { entity ->
+            applicationEventPublisher.publishEvent(
+                ChatCreatedEvent(
+                    chatId = entity.id,
+                    participantIds = entity.participants.map { it.userId }
+                )
+            )
+        }
     }
 
     @Transactional
