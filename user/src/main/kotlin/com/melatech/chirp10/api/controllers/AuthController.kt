@@ -146,6 +146,5 @@ class AuthController(
             oldPassword = body.oldPassword,
             newPassword = body.newPassword,
         )
-
     }
 }
