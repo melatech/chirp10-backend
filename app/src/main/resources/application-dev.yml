@@ -5,7 +5,7 @@ spring:
 
   mail:
     host: smtp.mailgun.org
-    username: bridgehouseexchange1!@sandbox41029d0bc4d642f48df8161e4b271dd7.mailgun.org
+    username: postmaster@sandbox41029d0bc4d642f48df8161e4b271dd7.mailgun.org
 
 jwt:
   expiration-minutes: 1000
